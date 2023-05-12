@@ -9,4 +9,15 @@ stop:
 	docker compose stop
 
 test:
-	docker-compose exec seed npm run test $(ARGS)
+	docker compose run --rm seed npm run test $(ARGS)
+
+format:
+	docker compose run --rm seed npm run format
+
+lint-fix:
+	docker compose run --rm seed npm run lint-fix
+
+before-commit:
+	make format
+	make lint-fix
+	make test

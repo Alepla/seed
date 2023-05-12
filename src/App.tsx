@@ -1,7 +1,7 @@
+import Login from "./views/login/Login"
+
 const App: React.FC = () => {
-  return (
-    <h1>Hola</h1>
-  )
+  return <Login />
 }
 
 export default App
