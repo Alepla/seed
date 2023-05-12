@@ -5,7 +5,7 @@
   make start
 ### Stop serving the aplication
   make stop
-### Run all test
+### Run all tests
   make test
 ### Exec always before commit
   make before-commit
