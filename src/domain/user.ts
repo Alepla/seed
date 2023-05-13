@@ -8,12 +8,12 @@ export default class User {
   }
 
   private validate(credentials: LoginCredentials): boolean {
-    const isFormValid = this.validateLoginForm(credentials).length === 0
+    const isFormValid = this.checkLoginFormErrors(credentials).length === 0
     if(isFormValid) return true
     return false
   }
 
-  public validateLoginForm(credentials: LoginCredentials): Array<string> {
+  public checkLoginFormErrors(credentials: LoginCredentials): Array<string> {
     const { email, password } = credentials
     const missingFields: Array<string> = []
 
