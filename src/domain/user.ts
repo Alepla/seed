@@ -1,25 +1,49 @@
+import { emptyUser } from "../shared/user"
 import { LoginCredentials } from "../types/user"
 
 export default class User {
-  constructor() {}
+  private user: LoginCredentials = emptyUser
+  private missingFields: Array<string> = []
 
-  public login(credentials: LoginCredentials): void {
-    this.validate(credentials)
+  constructor(user: LoginCredentials, missingFields: Array<string>) {
+    this.user = user
+    this.missingFields = missingFields
   }
 
-  private validate(credentials: LoginCredentials): boolean {
-    const isFormValid = this.checkLoginFormErrors(credentials).length === 0
-    if (isFormValid) return true
-    return false
+  public fillFormFields(key: string, value: string): User {
+    this.user[key as keyof LoginCredentials] = value
+    const updatedMissingFields = this.checkErrors(key)
+
+    return new User(this.user, updatedMissingFields)
   }
 
-  public checkLoginFormErrors(credentials: LoginCredentials): Array<string> {
-    const { email, password } = credentials
-    const missingFields: Array<string> = []
+  public login(): void {}
 
-    if (email == "") missingFields.push("email")
-    if (password == "") missingFields.push("password")
+  public checkLoginFormErrors(): User {
+    const { email, password } = this.user
+    this.missingFields = []
 
-    return missingFields
+    if (email == "") this.missingFields.push("email")
+    if (password == "") this.missingFields.push("password")
+
+    return new User(this.user, this.missingFields)
+  }
+
+  private checkErrors(key: string): Array<string> {
+    return this.missingFields.filter((field) => key != field)
+  }
+
+  public selectClass(key: string): string {
+    let result: string = "fieldset-input"
+    if (this.hasError(key)) result += "-error"
+    return result
+  }
+
+  private hasError(key: string): boolean {
+    return this.missingFields.some((field) => field == key)
+  }
+
+  public hasMissingFields(): boolean {
+    return this.missingFields.length > 0
   }
 }
