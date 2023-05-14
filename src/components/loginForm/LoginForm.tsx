@@ -2,8 +2,10 @@ import { useState } from "react"
 import User from "../../domain/user"
 import { emptyUser } from "../../shared/user"
 import "./loginForm.scss"
+import { useTranslation } from "react-i18next"
 
 const LoginForm: React.FC = () => {
+  const { t } = useTranslation();
   const [user, setUser] = useState<User>(new User(emptyUser, []))
 
   const handleLogin = (): void => {
@@ -22,12 +24,12 @@ const LoginForm: React.FC = () => {
       <div className="loginform-image"></div>
 
       <div className="loginform-content">
-        <p className="loginform-content__title">Iniciar sesión</p>
+        <p className="loginform-content__title">{t('login.login')}</p>
 
         <form className="loginform-content__form">
           <fieldset className="fieldset">
             <label className="fieldset-label">
-              Usuario
+            {t('login.user')}
               <input
                 onChange={(e) => {
                   handleFillForm("email", e.target.value)
@@ -40,7 +42,7 @@ const LoginForm: React.FC = () => {
 
           <fieldset className="fieldset">
             <label className="fieldset-label">
-              Contraseña
+            {t('login.password')}
               <input
                 onChange={(e) => {
                   handleFillForm("password", e.target.value)
@@ -56,7 +58,7 @@ const LoginForm: React.FC = () => {
           </fieldset>
 
           <button onClick={handleLogin} type="button" className="button">
-            Iniciar sesión
+            {t('login.login')}
           </button>
         </form>
       </div>
