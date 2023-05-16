@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { emptyUser } from "../../shared/auth"
 import { useTranslation } from "react-i18next"
-import { LoginCredentials } from "../../types/auth"
+import { LoginCredentials, LoginCredentialsErrors } from "../../types/auth"
 import "./loginForm.scss"
 
 const LoginForm: React.FC = () => {
@@ -23,8 +23,14 @@ const LoginForm: React.FC = () => {
     setMissingFields(emptyMissingFields)
   }
 
+  const errorsList: LoginCredentialsErrors = {
+    "email": "email no vacio",
+    "password": "password no vacia",
+  }
+
   const handleFillForm = (key: string, value: string): void => {
-    checkErrors(key)
+    const updatedMissingFields: Array<string> = checkErrors(key)
+    setMissingFields(updatedMissingFields)
     setUser({
       ...user,
       [key]: value
@@ -47,6 +53,10 @@ const LoginForm: React.FC = () => {
 
   const hasMissingFields = (): boolean => {
     return missingFields.length > 0
+  }
+
+  const invalidFieldErrorMessage = (field: string): string => {
+    return errorsList[field as keyof LoginCredentialsErrors]
   }
 
   return (
@@ -84,7 +94,9 @@ const LoginForm: React.FC = () => {
           </fieldset>
 
           <fieldset className="fieldset">
-            {hasMissingFields() && <label className="fielset-sublabel">error message</label>}
+            {hasMissingFields() && missingFields.map((field) => (
+              <label key={field} className="fielset-sublabel">{invalidFieldErrorMessage(field)}</label>
+            ))}
           </fieldset>
 
           <button onClick={handleLogin} type="button" className="button">
