@@ -1,22 +1,52 @@
 import { useState } from "react"
-import User from "../../domain/user"
-import { emptyUser } from "../../shared/user"
-import "./loginForm.scss"
+import { emptyUser } from "../../shared/auth"
 import { useTranslation } from "react-i18next"
+import { LoginCredentials } from "../../types/auth"
+import "./loginForm.scss"
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation();
-  const [user, setUser] = useState<User>(new User(emptyUser, []))
+  const [user, setUser] = useState<LoginCredentials>(emptyUser)
+  const [missingFields, setMissingFields] = useState<Array<string>>([])
 
   const handleLogin = (): void => {
-    const userUpdated: User = user.checkLoginFormErrors()
-    setUser(userUpdated)
-    user.login()
+    checkLoginFormErrors()
+  }
+
+  const checkLoginFormErrors = (): void => {
+    const { email, password } = user
+    const emptyMissingFields: Array<string> = []
+
+    if (email == "") emptyMissingFields.push("email")
+    if (password == "") emptyMissingFields.push("password")
+
+    setMissingFields(emptyMissingFields)
   }
 
   const handleFillForm = (key: string, value: string): void => {
-    const userUpdated: User = user.fillFormFields(key, value)
-    setUser(userUpdated)
+    checkErrors(key)
+    setUser({
+      ...user,
+      [key]: value
+    })
+  }
+
+  const checkErrors = (key: string): Array<string> => {
+    return missingFields.filter((field) => key != field)
+  }
+
+  const selectClass = (key: string): string => {
+    let result: string = "fieldset-input"
+    if (hasError(key)) result += "-error"
+    return result
+  }
+
+  const hasError = (key: string): boolean => {
+    return missingFields.some((field) => field == key)
+  }
+
+  const hasMissingFields = (): boolean => {
+    return missingFields.length > 0
   }
 
   return (
@@ -35,7 +65,7 @@ const LoginForm: React.FC = () => {
                   handleFillForm("email", e.target.value)
                 }}
                 type="text"
-                className={user.selectClass("email")}
+                className={selectClass("email")}
               />
             </label>
           </fieldset>
@@ -48,13 +78,13 @@ const LoginForm: React.FC = () => {
                   handleFillForm("password", e.target.value)
                 }}
                 type="password"
-                className={user.selectClass("password")}
+                className={selectClass("password")}
               />
             </label>
           </fieldset>
 
           <fieldset className="fieldset">
-            {user.hasMissingFields() && <label className="fielset-sublabel">error message</label>}
+            {hasMissingFields() && <label className="fielset-sublabel">error message</label>}
           </fieldset>
 
           <button onClick={handleLogin} type="button" className="button">
