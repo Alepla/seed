@@ -1,8 +1,8 @@
-import Login from "./views/login/Login"
+import Auth from "./views/auth/Auth"
 import './i18n'
 
 const App: React.FC = () => {
-  return <Login />
+  return <Auth />
 }
 
 export default App

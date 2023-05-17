@@ -1,13 +1,22 @@
 import { useState } from "react"
-import { emptyUser } from "../../shared/auth"
+import { emptyUser } from "../../../shared/auth"
 import { useTranslation } from "react-i18next"
-import { LoginCredentials, LoginCredentialsErrors } from "../../types/auth"
+import { LoginCredentials, LoginCredentialsErrors } from "../../../types/auth"
 import "./loginForm.scss"
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation();
   const [user, setUser] = useState<LoginCredentials>(emptyUser)
   const [missingFields, setMissingFields] = useState<Array<string>>([])
+
+  const handleFillForm = (key: string, value: string): void => {
+    const updatedMissingFields: Array<string> = checkErrors(key)
+    setMissingFields(updatedMissingFields)
+    setUser({
+      ...user,
+      [key]: value
+    })
+  }
 
   const handleLogin = (): void => {
     checkLoginFormErrors()
@@ -21,20 +30,6 @@ const LoginForm: React.FC = () => {
     if (password == "") emptyMissingFields.push("password")
 
     setMissingFields(emptyMissingFields)
-  }
-
-  const errorsList: LoginCredentialsErrors = {
-    "email": "email no vacio",
-    "password": "password no vacia",
-  }
-
-  const handleFillForm = (key: string, value: string): void => {
-    const updatedMissingFields: Array<string> = checkErrors(key)
-    setMissingFields(updatedMissingFields)
-    setUser({
-      ...user,
-      [key]: value
-    })
   }
 
   const checkErrors = (key: string): Array<string> => {
@@ -57,6 +52,11 @@ const LoginForm: React.FC = () => {
 
   const invalidFieldErrorMessage = (field: string): string => {
     return errorsList[field as keyof LoginCredentialsErrors]
+  }
+
+  const errorsList: LoginCredentialsErrors = {
+    "email": "email no vacio",
+    "password": "password no vacia",
   }
 
   return (
