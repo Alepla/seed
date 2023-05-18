@@ -1,4 +1,4 @@
-export type LoginCredentials = {
+export type LoginData = {
   email: string
   password: string
 }
@@ -10,12 +10,7 @@ export type RegisterData = {
   password: string
 }
 
-export type LoginCredentialsErrors = {
-  email: string
-  password: string
-}
-
-export type RegisterDataErrors = {
+export type AuthFieldsErrors = {
   name: string
   surname: string
   email: string

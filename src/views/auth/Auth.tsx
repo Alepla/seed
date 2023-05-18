@@ -1,8 +1,7 @@
-import LoginForm from "../../components/authForms/loginForm/LoginForm"
-import "./auth.scss"
+import RegisterForm from "../../components/authForms/registerForm/RegisterForm"
 
 const Auth: React.FC = () => {
-  return <LoginForm />
+  return <RegisterForm />
 }
 
 export default Auth
