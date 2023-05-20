@@ -2,8 +2,8 @@ import { emptyLoginData } from "../../../shared/auth"
 import { useTranslation } from "react-i18next"
 import { LoginData } from "../../../types/auth"
 import { useForm } from "../../../hooks/useForm"
-import "./loginForm.scss"
 import Auth from "../../../services/auth"
+import "./loginForm.scss"
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation()
