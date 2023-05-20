@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 import { LoginData } from "../../../types/auth"
 import { useForm } from "../../../hooks/useForm"
 import "./loginForm.scss"
+import Auth from "../../../services/auth"
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation()
@@ -16,8 +17,10 @@ const LoginForm: React.FC = () => {
     invalidFieldErrorMessage,
   } = useForm<LoginData>(emptyLoginData)
 
-  const handleLogin = (): void => {
+  const handleLogin = async (): Promise<void> => {
     checkFormErrors(data)
+    const cred = await Auth.login(data)
+    console.log(cred)
   }
 
   return (

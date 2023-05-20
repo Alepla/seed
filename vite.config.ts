@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vite'
+import {fileURLToPath, URL} from "url"
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
@@ -11,6 +12,7 @@ export default defineConfig({
       usePolling: true,
     },
   },
+  envDir: fileURLToPath(new URL("./env", import.meta.url)),
   test: {
     globals: true,
     environment: 'happy-dom',

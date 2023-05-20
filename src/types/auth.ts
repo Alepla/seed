@@ -16,3 +16,10 @@ export type AuthFieldsErrors = {
   email: string
   password: string
 }
+
+export type AuthInfo = {
+  jwtToken: string
+  name: string
+  email: string
+  locale: string
+}

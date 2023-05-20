@@ -9,3 +9,10 @@ export const emptyRegisterData = {
   email: "",
   password: "",
 }
+
+export const emptyCredentials = {
+  jwtToken: "",
+  name: "",
+  email: "",
+  locale: "",
+}
