@@ -5,6 +5,8 @@
   make start
 ### Stop serving the aplication
   make stop
+### Remove the docker container
+  make down
 ### Run all tests
   make test
 ### Exec always before commit

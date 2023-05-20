@@ -5,7 +5,7 @@ export default class SuperFetch {
   protected static jwtToken?: string
 
   static async post(baseUrl: string, payload: JSONRecord): Promise<JSONRecord> {
-    return await SuperFetch.call("POST", baseUrl, payload)
+    return await this.call("POST", baseUrl, payload)
   }
 
   private static async call(
@@ -13,7 +13,7 @@ export default class SuperFetch {
     endpoint: string,
     body?: JSONRecord
   ): Promise<JSONRecord> {
-    const response: Response = await fetch(endpoint, SuperFetch.requestOptions(method, body))
+    const response: Response = await fetch(endpoint, this.requestOptions(method, body))
     if (response.status >= 400) throw new Error()
     return await response.json()
   }
@@ -21,7 +21,7 @@ export default class SuperFetch {
   private static requestOptions(method: string, body?: JSONRecord): JSONRecord {
     const options: JSONRecord = {
       method,
-      headers: SuperFetch.headers(),
+      headers: this.headers(),
       body: JSON.stringify(body),
     }
     return cleanNonSet(options)
@@ -31,8 +31,8 @@ export default class SuperFetch {
     const result: Record<string, string> = {
       "content-type": "application/json;charset=UTF-8",
     }
-    if (SuperFetch.jwtToken) {
-      result.Authorization = "Bearer " + SuperFetch.jwtToken
+    if (this.jwtToken) {
+      result.Authorization = "Bearer " + this.jwtToken
     }
     return result
   }

@@ -8,6 +8,9 @@ start:
 stop:
 	docker compose stop
 
+down:
+	docker compose down
+
 test:
 	docker compose run --rm seed npm run test $(ARGS)
 
