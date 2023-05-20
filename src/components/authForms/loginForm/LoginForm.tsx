@@ -19,8 +19,7 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (): Promise<void> => {
     checkFormErrors(data)
-    const cred = await Auth.login(data)
-    console.log(cred)
+    await Auth.login(data)
   }
 
   return (

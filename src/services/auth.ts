@@ -1,8 +1,8 @@
-import Settings from "../infrastructure/settings";
-import SuperFetch, { JSONRecord } from "../infrastructure/superFetch";
-import { decode } from "../helpers/decodeToken";
-import { emptyCredentials } from "../shared/auth";
-import { AuthInfo, LoginData } from "../types/auth";
+import Settings from "../infrastructure/settings"
+import SuperFetch, { JSONRecord } from "../infrastructure/superFetch"
+import { decode } from "../helpers/decodeToken"
+import { emptyCredentials } from "../shared/auth"
+import { AuthInfo, LoginData } from "../types/auth"
 
 export default class Auth {
   static async login(data: LoginData): Promise<AuthInfo> {
@@ -20,7 +20,7 @@ export default class Auth {
     return result
   }
 
-  private static convertToCredentials(response: JSONRecord): AuthInfo{
+  private static convertToCredentials(response: JSONRecord): AuthInfo {
     const jwtToken: string = String(response.jwtToken)
     const credentials: JSONRecord = decode(jwtToken)
     return {

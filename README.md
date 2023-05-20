@@ -9,3 +9,10 @@
   make test
 ### Exec always before commit
   make before-commit
+
+## Environments
+
+- Development: File .env.development on env folder.
+- Production: File .env.production on env folder.
+
+Create this two files and copy the info of the .env.example file
