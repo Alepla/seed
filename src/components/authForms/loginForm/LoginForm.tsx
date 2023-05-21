@@ -2,11 +2,13 @@ import { emptyLoginData } from "../../../shared/auth"
 import { useTranslation } from "react-i18next"
 import { LoginData } from "../../../types/auth"
 import { useForm } from "../../../hooks/useForm"
-import Auth from "../../../services/auth"
+import { useAuthContext } from "../../../cotexts/authContext"
 import "./loginForm.scss"
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation()
+  const { login } = useAuthContext()
+
   const {
     data,
     handleFillForm,
@@ -19,7 +21,7 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (): Promise<void> => {
     checkFormErrors(data)
-    await Auth.login(data)
+    login(data)
   }
 
   return (

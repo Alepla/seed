@@ -4,6 +4,10 @@ export type JSONRecord = Record<string, unknown>
 export default class SuperFetch {
   protected static jwtToken?: string
 
+  static setToken(jwtToken: string): void {
+    this.jwtToken = jwtToken
+  }
+
   static async post(baseUrl: string, payload: JSONRecord): Promise<JSONRecord> {
     return await this.call("POST", baseUrl, payload)
   }
